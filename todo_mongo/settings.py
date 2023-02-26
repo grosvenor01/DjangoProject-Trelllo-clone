@@ -40,7 +40,13 @@ INSTALLED_APPS = [
     'APIs',
     'rest_framework',
     'rest_framework_mongoengine',
+    
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

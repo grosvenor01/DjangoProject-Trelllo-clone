@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from APIs.views import *
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/user_API/",user_API.as_view()),
@@ -23,4 +27,6 @@ urlpatterns = [
     path("api/todo_list/<str:pk>",todolist_managingAPI.as_view()),
     path("api/InProgressList/<str:pk>",InProgressList_managingAPI.as_view()),
     path("api/DoneList/<str:pk>",DoneList_managingAPI.as_view()),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

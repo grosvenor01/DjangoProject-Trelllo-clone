@@ -3,7 +3,8 @@ from django.http import HttpResponse,JsonResponse
 from .serializer import *
 from rest_framework.views import APIView 
 from rest_framework import status
-# Create your views here.
+from rest_framework import authentication, permissions
+from django.contrib.auth.models import User
 class user_API(APIView):
     def post(self , request ):
         serializer=user_serializer(data = request.data)
@@ -12,6 +13,8 @@ class user_API(APIView):
             return JsonResponse(serializer.data,status=201)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class empty_table_API(APIView):
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
     def post(self, request, pk ,format=None): #to create a empty table for a user 
         try:
             User=user.objects.get(id=pk)
@@ -34,6 +37,8 @@ class empty_table_API(APIView):
         except table_list.DoesNotExist:
             return HttpResponse("query doesn't exist")            
 class todolist_managingAPI(APIView):
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
     def post(self ,request , pk   ,format=None):
         try:
             table=table_list.objects.get(id=pk)
@@ -58,6 +63,8 @@ class todolist_managingAPI(APIView):
         except table_list.DoesNotExist :
             return HttpResponse("table does not exist")
 class InProgressList_managingAPI(APIView):
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
     def post(self ,request , pk   ,format=None):
         try:
             table=table_list.objects.get(id=pk)
@@ -82,6 +89,8 @@ class InProgressList_managingAPI(APIView):
         except table_list.DoesNotExist :
             return HttpResponse("table does not exist")
 class DoneList_managingAPI(APIView):
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
     def post(self ,request , pk   ,format=None):
         try:
             table=table_list.objects.get(id=pk)
